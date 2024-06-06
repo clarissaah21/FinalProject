@@ -92,20 +92,45 @@ ALTER TABLE tbl_departments ADD CONSTRAINT FK_tbl_locations FOREIGN KEY (locatio
 ALTER TABLE tbl_departments ALTER COLUMN id INT NOT NULL;
 ALTER TABLE tbl_departments ADD CONSTRAINT PK_tbl_departments PRIMARY KEY (id);
 ALTER TABLE tbl_job_histories ADD CONSTRAINT FK_tbl_departments FOREIGN KEY (department) REFERENCES tbl_departments (id);
+ALTER TABLE tbl_employees ADD CONSTRAINT FK_tbl_departments_employees FOREIGN KEY (department) REFERENCES tbl_departments (id);
 
+ALTER TABLE tbl_roles ALTER COLUMN id INT NOT NULL;
+ALTER TABLE tbl_roles ADD CONSTRAINT PK_tbl_roles PRIMARY KEY (id);
+ALTER TABLE tbl_account_roles ADD CONSTRAINT FK_tbl_roles FOREIGN KEY (role) REFERENCES tbl_roles (id);
+ALTER TABLE tbl_role_permissions ADD CONSTRAINT FK_tbl_roles_role_permissons FOREIGN KEY (role) REFERENCES tbl_roles (id);
 
 ALTER TABLE tbl_employees ALTER COLUMN id INT NOT NULL;
 ALTER TABLE tbl_employees ADD CONSTRAINT PK_tbl_employees PRIMARY KEY (id);
 ALTER TABLE tbl_job_histories ADD CONSTRAINT FK_tbl_employees FOREIGN KEY (employee) REFERENCES tbl_employees (id);
+ALTER TABLE tbl_accounts ADD CONSTRAINT FK_tbl_employees_accounts FOREIGN KEY (id) REFERENCES tbl_employees (id);
+ALTER TABLE tbl_employees ADD CONSTRAINT FK_tbl_employees_manager FOREIGN KEY (manager) REFERENCES tbl_employees(id);
 
---blm
+ALTER TABLE tbl_account_roles ALTER COLUMN id INT NOT NULL;
+ALTER TABLE tbl_account_roles ADD CONSTRAINT PK_tbl_account_roles PRIMARY KEY (id);
+
+ALTER TABLE tbl_job_histories ALTER COLUMN start_date DATE NOT NULL;
+ALTER TABLE tbl_job_histories ADD CONSTRAINT PK_tbl_job_histories PRIMARY KEY (start_date);
+
+
 ALTER TABLE tbl_jobs ALTER COLUMN id VARCHAR(10) NOT NULL;
 ALTER TABLE tbl_jobs ADD CONSTRAINT PK_tbl_jobs PRIMARY KEY (id);
 ALTER TABLE tbl_employees ADD CONSTRAINT FK_tbl_jobs FOREIGN KEY (job) REFERENCES tbl_jobs (id);
-ALTER TABLE tbl_job_histories ADD CONSTRAINT FK_tbl_jobs FOREIGN KEY (job) REFERENCES tbl_jobs (id);
+ALTER TABLE tbl_job_histories ADD CONSTRAINT FK_tbl_jobs_job_histories FOREIGN KEY (job) REFERENCES tbl_jobs (id);
 
-ALTER TABLE tbl_employees ADD CONSTRAINT FK_tbl_departments FOREIGN KEY (department) REFERENCES tbl_departments (id);
 
-ALTER TABLE tbl_locations ALTER COLUMN id INT NOT NULL;
-ALTER TABLE tbl_locations ADD CONSTRAINT PK_tbl_locations PRIMARY KEY (id);
-ALTER TABLE tbl_departments ADD CONSTRAINT FK_tbl_locations FOREIGN KEY (location) REFERENCES tbl_locations (id);
+ALTER TABLE tbl_permissions ALTER COLUMN id INT NOT NULL;
+ALTER TABLE tbl_permissions ADD CONSTRAINT PK_tbl_permissions PRIMARY KEY (id);
+ALTER TABLE tbl_role_permissions ADD CONSTRAINT FK_tbl_permissions FOREIGN KEY (permission) REFERENCES tbl_permissions (id);
+
+ALTER TABLE tbl_role_permissions ALTER COLUMN id INT NOT NULL;
+ALTER TABLE tbl_role_permissions ADD CONSTRAINT PK_tbl_role_permissions PRIMARY KEY (id);
+
+ALTER TABLE tbl_accounts ALTER COLUMN id INT NOT NULL;
+ALTER TABLE tbl_accounts ADD CONSTRAINT PK_tbl_accounts PRIMARY KEY (id);
+ALTER TABLE tbl_account_roles ADD CONSTRAINT FK_tbl_accounts FOREIGN KEY (account) REFERENCES tbl_accounts (id);
+
+ALTER TABLE tbl_employees ADD CONSTRAINT UQ_tbl_Employees_email UNIQUE (email);
+
+
+
+
